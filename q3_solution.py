@@ -80,14 +80,14 @@ class SimSiam(nn.Module):
         """
         z1 = self.encoder(x1)
         z2 = self.encoder(x2)
-        # p1 = self.predictor(z1)
-        # p2 = self.predictor(z2)
-        p1 = self.predictor(self.encoder(x1))
-        p2 = self.predictor(self.encoder(x2))
+        p1 = self.predictor(z1)
+        p2 = self.predictor(z2)
+        # p1 = self.predictor(self.encoder(x1))
+        # p2 = self.predictor(self.encoder(x2))
 
         if self.stop_gradient:
-            z1.detach()
-            z2.detach()
+            z1 = z1.detach()
+            z2 = z2.detach()
 
         return p1, p2, z1, z2
 
