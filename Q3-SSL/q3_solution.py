@@ -78,6 +78,17 @@ class SimSiam(nn.Module):
         WRITE CODE HERE. DONT MODIFY THE PARAMETERS OF THE FUNCTION. Otherwise, tests might fail.
         Note that the outputs are differnt if stop_gradient is True or False
         """
+        z1 = self.encoder(x1)
+        z2 = self.encoder(x2)
+        p1 = self.predictor(z1)
+        p2 = self.predictor(z2)
+
+        if self.stop_gradient:
+            z1.detach()
+            z2.detach()
+
+        return p1, p2, z1, z2
+
 
     def loss (self, p1,p2,z1,z2, similarity_function='CosineSimilarity'):
         """ 
@@ -89,6 +100,9 @@ class SimSiam(nn.Module):
         """
         WRITE CODE HERE. DONT MODIFY THE PARAMETERS OF THE FUNCTION. Otherwise, tests might fail.
         """
+        cos = CosineSimilarity()
+        bi_loss = -0.5 * (cos(p1, z2)+cos(p2, z1))
+        return bi_loss
 
 # you might need this function when implementing CosineSimilarity forward function
 def bdot(a, b):
@@ -134,4 +148,8 @@ class CosineSimilarity(Module):
         """
         """
         WRITE CODE HERE. DONT MODIFY THE PARAMETERS OF THE FUNCTION. Otherwise, tests might fail.
+        
         """
+        # return F.cosine_similarity(x1, x2, self.dim, self.eps)
+        sim = bdot(x1, x2)/torch.max(torch.sqrt(bdot(x1, x1))*torch.sqrt(bdot(x2, x2)),self.eps)
+        return sim
