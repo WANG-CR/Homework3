@@ -151,5 +151,5 @@ class CosineSimilarity(Module):
         
         """
         # return F.cosine_similarity(x1, x2, self.dim, self.eps)
-        sim = bdot(x1, x2)/torch.maximum((torch.sqrt(bdot(x1, x1))*torch.sqrt(bdot(x2, x2))),self.eps)
+        sim = bdot(x1, x2)/torch.maximum((torch.sqrt(bdot(x1, x1))*torch.sqrt(bdot(x2, x2))),torch.Tensor(self.eps))
         return sim
