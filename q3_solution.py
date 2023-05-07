@@ -153,6 +153,6 @@ class CosineSimilarity(Module):
         WRITE CODE HERE. DONT MODIFY THE PARAMETERS OF THE FUNCTION. Otherwise, tests might fail.
         
         """
-        return F.cosine_similarity(x1, x2, self.dim, self.eps)
-        sim = bdot(x1, x2)/torch.maximum((torch.sqrt(bdot(x1, x1))*torch.sqrt(bdot(x2, x2))),torch.Tensor(self.eps))
+        prod_norm = torch.norm(x1, dim=self.dim) * torch.norm(x2, dim=self.dim)
+        sim = bdot(x1, x2)/torch.max(prod_norm ,torch.ones_like(prod_norm) * self.eps)
         return sim
