@@ -601,7 +601,7 @@ def p_sample(model, x, t, t_index):
       noise = torch.randn_like(x)
       
       # Followed by reparameterization to obtain distribution from the mean and variance computed above.
-      sample = p_mean + posterior_variance_t * noise
+      sample = p_mean + torch.sqrt(posterior_variance_t) * noise
     return sample
 
 def p_sample_loop(model, shape, timesteps):
