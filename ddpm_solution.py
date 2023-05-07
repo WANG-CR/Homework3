@@ -705,6 +705,7 @@ if __name__ == '__main__':
 epochs = 30
 
 if __name__ == '__main__':
+  print(f"training is begin")
   train_dataloader, _ = get_dataloaders(data_root, batch_size=train_batch_size)
   for epoch in range(epochs):
     with tqdm(train_dataloader, unit="batch", leave=False) as tepoch:
@@ -725,12 +726,19 @@ if __name__ == '__main__':
         
         tepoch.set_postfix(loss=loss.item())
 
-    # Sample and Save Generated Images
-    save_image((x + 1.) * 0.5, './results/orig.png')
-    samples = sample(model, image_size=image_size, batch_size=64, channels=input_channels)
-    samples = (torch.Tensor(samples[-1]) + 1.) * 0.5
-    save_image(samples, f'./results/samples_{epoch}.png')
-  
+    ## when epoch is a multiplier of 5
+    if epoch % 5 == 4:
+      torch.save(model, f'results/q2/checkpoint/model_{epoch}.ckpt')
+
+      # Sample and Save Generated Images
+      save_image((x + 1.) * 0.5, f'./results/q2/orig_{epoch}.png')
+      samples = sample(model, image_size=image_size, batch_size=64, channels=input_channels)
+      samples = (torch.Tensor(samples[-1]) + 1.) * 0.5
+      save_image(samples, f'./results/q2/samples_{epoch}.png')
+
   show_image(samples)
 
 
+
+
+# %%
