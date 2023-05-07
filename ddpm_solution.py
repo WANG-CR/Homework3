@@ -539,7 +539,7 @@ def q_sample(x_start, t, noise=None):
   if noise is None:
     noise = torch.randn_like(x_start)
 
-  sqrt_alphas_cumprod_t = extract(alphas_cumprod, t, x_start.shape)         # WRITE CODE HERE: Obtain the cumulative product sqrt_alphas_cumprod up to a given point t in a batched manner for different t's
+  sqrt_alphas_cumprod_t = extract(sqrt_alphas_cumprod, t, x_start.shape)         # WRITE CODE HERE: Obtain the cumulative product sqrt_alphas_cumprod up to a given point t in a batched manner for different t's
   sqrt_one_minus_alphas_cumprod_t = extract(sqrt_one_minus_alphas_cumprod, t, x_start.shape)    # WRITE CODE HERE: Same as above, but for sqrt_one_minus_alphas_cumprod
 
   x_noisy = sqrt_alphas_cumprod_t + noise *  sqrt_one_minus_alphas_cumprod_t        # WRITE CODE HERE: Given the above co-efficients and the noise, generate a noisy sample based on q(x_t | x_0)
