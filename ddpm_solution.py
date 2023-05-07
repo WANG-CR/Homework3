@@ -542,7 +542,7 @@ def q_sample(x_start, t, noise=None):
   sqrt_alphas_cumprod_t = extract(sqrt_alphas_cumprod, t, x_start.shape)         # WRITE CODE HERE: Obtain the cumulative product sqrt_alphas_cumprod up to a given point t in a batched manner for different t's
   sqrt_one_minus_alphas_cumprod_t = extract(sqrt_one_minus_alphas_cumprod, t, x_start.shape)    # WRITE CODE HERE: Same as above, but for sqrt_one_minus_alphas_cumprod
 
-  x_noisy = sqrt_alphas_cumprod_t + noise *  sqrt_one_minus_alphas_cumprod_t        # WRITE CODE HERE: Given the above co-efficients and the noise, generate a noisy sample based on q(x_t | x_0)
+  x_noisy = sqrt_alphas_cumprod_t + sqrt_one_minus_alphas_cumprod_t * noise      # WRITE CODE HERE: Given the above co-efficients and the noise, generate a noisy sample based on q(x_t | x_0)
 
   return x_noisy
 
@@ -601,7 +601,7 @@ def p_sample(model, x, t, t_index):
       noise = torch.randn_like(x)
       
       # Followed by reparameterization to obtain distribution from the mean and variance computed above.
-      sample = p_mean + posterior_variance * noise
+      sample = p_mean + posterior_variance_t * noise
     return sample
 
 def p_sample_loop(model, shape, timesteps):
