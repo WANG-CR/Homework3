@@ -103,7 +103,8 @@ class SimSiam(nn.Module):
         WRITE CODE HERE. DONT MODIFY THE PARAMETERS OF THE FUNCTION. Otherwise, tests might fail.
         """
         cos = CosineSimilarity()
-        bi_loss = -0.5 * (cos(p1, z2)+cos(p2, z1))
+        bi_loss = -0.5 * (cos(p1, z2).mean()+cos(p2, z1).mean())
+        # bi_loss = bi_loss.mean()
         return bi_loss
 
 # you might need this function when implementing CosineSimilarity forward function
