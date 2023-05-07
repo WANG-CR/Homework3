@@ -84,7 +84,7 @@
 # For our settings, instead of the $L_2$ loss, we will use the huber loss, which is $L_1$ loss but near the origin, acts as an $L_2$ loss. For details, refer [here](https://pytorch.org/docs/stable/generated/torch.nn.SmoothL1Loss.html). For more details about diffusion models, please refer to the [DDPM paper](https://arxiv.org/abs/2006.11239) and the related [blog post](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/).
 
 # %%
-pip install -q -U einops
+!pip install -q -U einops
 
 # %%
 import random
