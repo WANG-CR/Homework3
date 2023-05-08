@@ -261,7 +261,7 @@ class DiagonalGaussianDistribution(object):
     # Return: Tensor of size (batch size,) containing the log-likelihood for each element in the batch
     k = self.mean.shape[1]
     print(f"shape of mean is {self.mean.shape}")
-    log_term = 0.5 * (k * torch.log(2 * torch.from_numpy(np.pi)) + self.logvar)
+    log_term = 0.5 * (k * torch.log(2 * torch.tensor(np.pi)) + self.logvar)
     negative_ll = 0.5 * (sample - self.mean) ** 2 / self.var
     negative_ll = negative_ll.sum(dim=dims)
     return negative_ll
